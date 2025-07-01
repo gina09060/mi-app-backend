@@ -1,13 +1,12 @@
-require('dotenv').config();  // Asegúrate de que dotenv esté instalado
-
 const mysql = require('mysql');
 
+// Conexión a la base de datos de Aiven con puerto 20651
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,         // Usar la variable de entorno DB_HOST
-  user: process.env.DB_USER,         // Usar la variable de entorno DB_USER
-  password: process.env.DB_PASSWORD, // Usar la variable de entorno DB_PASSWORD
-  database: process.env.DB_NAME,     // Usar la variable de entorno DB_NAME
-  port: 3306                         // Puerto para MySQL
+  host: process.env.DB_HOST,       // Host proporcionado por Aiven (ej. aiven.io)
+  user: process.env.DB_USER,       // Usuario de la base de datos
+  password: process.env.DB_PASSWORD, // Contraseña de la base de datos
+  database: process.env.DB_NAME,     // Nombre de la base de datos
+  port: 20651                         // Puerto proporcionado por Aiven
 });
 
 connection.connect((err) => {
@@ -17,5 +16,3 @@ connection.connect((err) => {
   }
   console.log('Conectado a la base de datos');
 });
-
-module.exports = connection;
