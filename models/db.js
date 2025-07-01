@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   user: process.env.DB_USER,       // Usuario de la base de datos
   password: process.env.DB_PASSWORD, // Contraseña de la base de datos
   database: process.env.DB_NAME,     // Nombre de la base de datos
-  port: 20651                         // Puerto proporcionado por Aiven
+  port: 3306                       // Puerto proporcionado por Aiven
 });
 
 connection.connect((err) => {
