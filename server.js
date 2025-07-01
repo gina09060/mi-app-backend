@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const authRoutes = require('./routes/authRoutes'); // ya usas authRoutes
+const authRoutes = require('./routers/authRoutes'); // ya usas authRoutes
 
 
 const app = express();
