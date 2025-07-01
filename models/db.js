@@ -1,18 +1,19 @@
-const mysql = require('mysql12');
+const mysql = require('mysql2');
 
-// Conexión a la base de datos de Aiven con puerto 20651
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,       // Host proporcionado por Aiven (ej. aiven.io)
-  user: process.env.DB_USER,       // Usuario de la base de datos
-  password: process.env.DB_PASSWORD, // Contraseña de la base de datos
-  database: process.env.DB_NAME,     // Nombre de la base de datos
-  port: 3306                       // Puerto proporcionado por Aiven
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306
 });
 
-connection.connect((err) => {
+db.connect((err) => {
   if (err) {
-    console.error('Error conectando a la base de datos:', err.stack);
-    return;
+    console.error('Error conectando a la base de datos: ', err);
+  } else {
+    console.log('Conexión a la base de datos establecida');
   }
-  console.log('Conectado a la base de datos');
 });
+
+module.exports = db;
