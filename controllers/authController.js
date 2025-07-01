@@ -168,3 +168,14 @@ exports.hermandad = (req, res) => {
     });
   }
 };
+exports.getAllUsers = (req, res) => {
+  const sql = 'SELECT * FROM users'; // Obtener todos los usuarios
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al obtener usuarios:', err);
+      return res.status(500).json({ error: 'Error al obtener usuarios' });
+    }
+    res.json(results);  // Devuelve los resultados de la consulta
+  });
+};
