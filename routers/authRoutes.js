@@ -9,7 +9,7 @@ router.post('/register', upload.single('photo'), authController.register);
 
 // ✅ Actualizar perfil con foto
 router.put('/profile/:id', upload.single('photo'), authController.updateProfile);
-router.get('/', authController.getAllUsers);
+
 // ✅ Login y otros
 router.post('/login', authController.login);
 router.get('/profile/:id', authController.getProfile);
