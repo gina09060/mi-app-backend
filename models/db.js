@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql12');
 
 // Conexión a la base de datos de Aiven con puerto 20651
 const connection = mysql.createConnection({
