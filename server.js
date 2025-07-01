@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const authRoutes = require('./routers/authRoutes'); // ya usas authRoutes
+require('dotenv').config();
 
 
 const app = express();
