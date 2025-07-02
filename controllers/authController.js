@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
     const photo = req.file ? req.file.buffer : null;
 
     const sql = `
-      INSERT INTO users (name, lastname, birthday, phone, age, sex, description, direccion, email, password, photo)
+      INSERT INTO application (name, lastname, birthday, phone, age, sex, description, direccion, email, password, photo)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
 exports.login = (req, res) => {
   const { email, password } = req.body;
 
-  db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
+  db.query('SELECT * FROM application WHERE email = ?', [email], async (err, results) => {
     if (err) return res.status(500).json({ error: 'Error al buscar usuario' });
     if (results.length === 0) return res.status(401).json({ error: 'Credenciales incorrectas' });
 
@@ -51,7 +51,7 @@ exports.login = (req, res) => {
 // ✅ OBTENER PERFIL
 exports.getProfile = (req, res) => {
   const id = req.params.id;
-  db.query('SELECT * FROM users WHERE id = ?', [id], (err, results) => {
+  db.query('SELECT * FROM application WHERE id = ?', [id], (err, results) => {
     if (err || results.length === 0) return res.status(404).json({ message: "No encontrado" });
     res.json(results[0]);
   });
@@ -74,7 +74,7 @@ exports.updateProfile = (req, res) => {
   ];
 
   let sql = `
-    UPDATE users SET
+    UPDATE application SET
     name=?, lastname=?, phone=?, direccion=?, description=?,
     birthday=?, age=?, sex=?, email=?
   `;
@@ -100,7 +100,7 @@ exports.updateProfile = (req, res) => {
 // ✅ ELIMINAR PERFIL
 exports.deleteProfile = (req, res) => {
   const id = req.params.id;
-  db.query('DELETE FROM users WHERE id = ?', [id], (err) => {
+  db.query('DELETE FROM application WHERE id = ?', [id], (err) => {
     if (err) return res.status(500).json({ error: err });
     res.json({ message: "Cuenta eliminada" });
   });
@@ -124,7 +124,7 @@ exports.hermandad = (req, res) => {
     const sql = `
       SELECT id, name, lastname, birthday, photo,
       TIMESTAMPDIFF(YEAR, birthday, CURDATE()) AS edad
-      FROM users
+      FROM application
       WHERE 
         (MONTH(birthday) = ? AND DAY(birthday) BETWEEN ? AND ?)
         OR
@@ -154,7 +154,7 @@ exports.hermandad = (req, res) => {
     const sql = `
       SELECT id, name, lastname, birthday, photo,
       TIMESTAMPDIFF(YEAR, birthday, CURDATE()) AS edad
-      FROM users
+      FROM application
       WHERE MONTH(birthday) = ?
       ORDER BY DAY(birthday)
     `;
@@ -168,14 +168,4 @@ exports.hermandad = (req, res) => {
     });
   }
 };
-exports.getAllUsers = (req, res) => {
-  const sql = 'SELECT * FROM users'; // Obtener todos los usuarios
 
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error('Error al obtener usuarios:', err);
-      return res.status(500).json({ error: 'Error al obtener usuarios' });
-    }
-    res.json(results);  // Devuelve los resultados de la consulta
-  });
-};
